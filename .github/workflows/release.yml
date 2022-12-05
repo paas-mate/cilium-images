@@ -21,6 +21,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Save cilium
+        run: docker pull quay.io/cilium/cilium:v1.12.4; docker save quay.io/cilium/cilium:v1.12.4 -o cilium.tar.gz
       - name: Save operator-generic
         run: docker pull quay.io/cilium/operator-generic:v1.12.4; docker save quay.io/cilium/operator-generic:v1.12.4 -o operator-generic.tar.gz
       - uses: dev-drprasad/delete-tag-and-release@v0.2.0
@@ -46,6 +48,7 @@ jobs:
           name: "v1.12.4"
           tag_name: v1.12.4
           files: |
+            cilium.tar.gz
             operator-generic.tar.gz
           draft: false
           prerelease: false
